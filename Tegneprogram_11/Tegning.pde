@@ -1,10 +1,26 @@
 import java.util.Arrays;
 
+
 class Tegning {
    Streg[] nyStreg;
   
 Tegning () {
    nyStreg = new Streg[0]; // Initialize an empty array for nyStreg
+}
+
+void addnyTegning() {
+    strokeW = 1;
+    background(255);
+    tegningtext();
+    tegningfed();
+    farve = color(0,0,0);
+    Tegning[] newTegning = new Tegning[nyTegning.length+1]; // her initieres et nyt object af typen Tegning
+    for (int i = 0; i < nyTegning.length; i++) { // Her kopieres alle objekter af Tegning over i det nye array newTegning
+      newTegning[i] = nyTegning[i];
+    }
+    newTegning[nyTegning.length] = new Tegning(); 
+    nyTegning = newTegning; // Her kopieres det midlertidige array newTegning over i det gamle array nyTegning
+    // nyTegning = (Tegning[]) append(nyTegning, new Tegning()); // Her kunne jeg også udvide arrayet Tegning[] med metoden append
 }
 
 void addnyStreg(Streg ny) {
@@ -18,18 +34,7 @@ void addnyStreg(Streg ny) {
     println("nyTegning["+z+"] har "+nyStreg.length+" streger");
 }
 
-void addnyTegning() { // Metoden bruges ikke lige nu da jeg ikke kunne få det til at fungerer
-    Tegning[] newTegning = new Tegning[nyTegning.length+1]; // her oprettes en ny tom nyStreg
-    for (int i = 0; i < nyTegning.length; i++) {
-      newTegning[i] = nyTegning[i];
-    }
-    newTegning[nyTegning.length] = new Tegning();
-    nyTegning = newTegning;
-    //println("nyTegning["+z+"] har "+nyTegning[z-1].nyStreg.length+" streger");
-    
-}
-
-void tegnIgen() {
+void tegnTegning() {
   background(255);
   tegningtext();
   for(int w = 0; w<nyTegning[tempZ].nyStreg.length; w++) {  

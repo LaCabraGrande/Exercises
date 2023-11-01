@@ -1,28 +1,31 @@
 // Færdigkodet mandag d. 11/9-2023
-int z = 1; // her initialiserer og deklarer jeg tælleren til nyTegning
+
+int z = 1; // her deklarerer og initialiserer jeg tælleren til nyTegning
 int tempZ; // hjælpevariabel til når jeg bladrer i mine tegninger
 int strokeW = 1; // Fed eller ikke fed
 boolean keyN = false; // her initialiserer og deklareret jeg en boolean karakter som bruges til at starte en ny Tegning op 
 boolean keyA = false; // De følgende 3 boolean variabler bruges når jeg skal bladre i tegningerne
 boolean keyD = false;
 boolean keyF = false;
+String farveT = "Sort";
 color farve = color(0,0,0); // grundfarven sort
 
 
-Tegning[] nyTegning = new Tegning[z]; // Her initialiserer jeg Tegning-arrayet af objekter 
+Tegning[] nyTegning = new Tegning[z]; // Her deklarerer jeg nyTegning-arrayet som er et array af objekter af Tegning klassen 
 
 
 void setup() {
+  
   size(800,800);
   background(255);
-  nyTegning[0] = new Tegning(); // Her deklarerer jeg det første Terning objekt som kun skal indeholde et array af objekter af klassen Streg
-  tegningtext(); 
+  nyTegning[0] = new Tegning(); // Her initialiserer jeg det første Terning objekt som kun skal indeholde et array af objekter af klassen Streg
+  tegningtext(); // Her skriver jeg på skærmen på hvilken tegning vi er 
 }
 
 void draw() {
-  tegningfed();
+  tegningfed(); // Hvis jeg har valgt at tegne med fed bliver der skrevet fed på skærmen
+  farveTekst(farveT);
   
-
   if(mousePressed) {
     if (mouseButton == LEFT && mouseX>=5 && pmouseX>=5 && mouseX<=(width-5) && pmouseX<=(width-5) && mouseY>=100 && pmouseY>=100 && mouseY<=(height-5) && pmouseY<=(height-5)) {
       stroke(farve);
@@ -46,17 +49,18 @@ void keyPressed() {
     tempZ = z-1;
     background(255);
     stroke(0);
-    newPaint();
+    farveT = "Sort";
+    nyTegning[nyTegning.length-1].addnyTegning();
     keyN = true;
   }
   if(key == 'a' && !keyA && tempZ>0 || key == 'A' && !keyA && tempZ>0) {
     tempZ--;
-    nyTegning[tempZ].tegnIgen();
+    nyTegning[tempZ].tegnTegning();
     keyA = true;
   }
   if(key == 'd' && !keyD && tempZ<(z-1)|| key == 'D' && !keyD && tempZ<(z-1)) {
     tempZ++;
-    nyTegning[tempZ].tegnIgen();
+    nyTegning[tempZ].tegnTegning();
     keyD = true;
   }
   if(key == 'f' || key == 'F' && tempZ<(z-1)) {
@@ -70,18 +74,28 @@ void keyPressed() {
   }
   if(key == 'g' || key == 'G' && tempZ<(z-1)) {
     farve = color(0,255,0);
+    farveUdvisk();
+    farveT = "Grøn";
   }
   if(key == 'b' || key == 'B' && tempZ<(z-1)) {
     farve = color(0,0,255);
+    farveUdvisk();
+    farveT = "Blå";
   }
   if(key == 'r' || key == 'R' && tempZ<(z-1)) {
     farve = color(255,0,0);
+    farveUdvisk();
+    farveT = "Rød";
   }
   if(key == 'y' || key == 'Y' && tempZ<(z-1)) {
     farve = color(255,255,0);
+    farveUdvisk();
+    farveT = "Gul";
   }
   if(key == 's' || key == 'S' && tempZ<(z-1)) {
     farve = color(0,0,0);
+    farveUdvisk();
+    farveT = "Sort";
   }
     
    println("Z er "+z+" og tempZ er "+tempZ);
@@ -118,19 +132,18 @@ void tegningtext() {
   text("Tegning : "+(tempZ+1), 30, 50);
 }
 
-void newPaint() {
-    strokeW = 1;
-    background(255);
-    tegningtext();
-    tegningfed();
-    farve = color(0,0,0);
-    Tegning[] newTegning = new Tegning[nyTegning.length+1]; // her initieres et nyt object af typen Tegning
-    for (int i = 0; i < nyTegning.length; i++) { // Her kopieres alle objekter af Tegning over i det nye array newTegning
-      newTegning[i] = nyTegning[i];
-    }
-    newTegning[nyTegning.length] = new Tegning(); 
-    nyTegning = newTegning; // Her kopieres det midlertidige array newTegning over i det gamle array nyTegning
-   
-    // nyTegning = (Tegning[]) append(nyTegning, new Tegning()); // Her kunne jeg også udvide arrayet Tegning[] med metoden append
- 
+void farveTekst(String farveT) {
+    textSize(20);
+    fill(255, 255, 255);
+    text("      ", 580, 50);
+    textSize(20);
+    fill(0, 0, 0);
+    text(farveT, 580, 50);
+}
+
+void farveUdvisk() {
+    noStroke();
+    fill(255,255,255);
+    rectMode(CORNER);
+    rect(580,33,50,20);
 }     
