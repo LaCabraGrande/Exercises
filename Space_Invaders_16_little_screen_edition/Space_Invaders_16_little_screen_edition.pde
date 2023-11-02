@@ -116,6 +116,10 @@ void draw() {
   }  
   if(alienhit == 55) {
     level++;
+    alienSpaceship.stop();
+    laserMisile.stop();
+    fallingBomb.stop();
+   
     if(level<10) {
       timeBetweenAttack = (int)random(20-level,60-level);
     } else {
@@ -285,6 +289,7 @@ void draw() {
   
   if(misile.size()<1 && !launch && keySpace) {
      misile.add(new Misile(spaceship.get(0).xpos+58,1170));
+     laserMisile.play();
      launch = true;
   }
   
@@ -337,7 +342,6 @@ void draw() {
     }
     if(key == ' ') {
       keySpace = true;
-      laserMisile.play();
     }  
   }
   
@@ -389,7 +393,7 @@ void draw() {
         try {
             FileWriter writer = new FileWriter("C:\\Users\\larsg\\Documents\\Processing\\Space_Invaders_16_little_screen_edition\\scorelist.txt");
             for(Gamescore g : gamescore) {
-                writer.write(g.getScore()+","+ g.getDate()+","+g.getTime()+"\n");
+                writer.write(g.getScore()+","+ g.getDate()+","+g.getHour()+","+g.getMinute()+"\n");
             }
             writer.close();
         } catch (IOException e) {
@@ -406,9 +410,12 @@ void draw() {
                 String line = scanner.nextLine();
                 String[] info = line.split(",");
                 int score = Integer.parseInt(info[0]);
-                String date = info[1];
-                String time = info[2];
-                Gamescore g = new Gamescore(score,date,time);
+                int day = Integer.parseInt(info[1]);
+                int month = Integer.parseInt(info[2]);
+                int year = Integer.parseInt(info[3]);
+                int hour = Integer.parseInt(info[4]);
+                int minute = Integer.parseInt(info[5]);
+                Gamescore g = new Gamescore(score,day,month,year,hour,minute);
                 gamescore.add(g);
             }
             scanner.close();
@@ -418,7 +425,7 @@ void draw() {
   }
   
   void addToscore() {
-    gamescore.add(new Gamescore(point,day()+"."+month()+"."+year(),hour()+":"+minute()));
+    gamescore.add(new Gamescore(point,day(),month(),year(),hour(),minute()));
   }  
   
   void printTopScore() {
@@ -429,14 +436,37 @@ void draw() {
     gamescore.sort((a, b) -> b.score - a.score);
     int linie = 450;
     num = 0;
+    String hour,minute,day,month,year;
     for(Gamescore t: gamescore) {
       num++;
       textSize(60);
       fill(255);
       if(num<10) {
         text(t.getScore(),640,linie);
-        text(t.getDate(),840,linie);
-        text(t.getTime(), 1190, linie);
+        if(t.getDay()<10) {
+          day = "0"+t.getDay();
+        } else {
+          day = ""+t.getDay();
+        }
+        if(t.getMonth()<10) {
+          month = "0"+t.getMonth();
+        } else {
+          month = ""+t.getMonth();
+        }
+        year = ""+t.getYear();     
+        text(day+"."+month+"."+year,840,linie);
+        if(t.getHour()<10) {
+          hour = "0"+t.getHour();
+        } else {
+          hour = ""+t.getHour();
+        }  
+        if(t.getMinute()<10) {
+          minute = "0"+t.getMinute();
+        } else {
+          minute = ""+t.getMinute();
+        }  
+        text(hour+":"+minute, 1190, linie);
+        //text(t.getHour()+":"+t.getMinute(), 1190, linie);
       }
       linie += 85;     
     }  
@@ -459,7 +489,11 @@ void draw() {
   int checkHiscore() {
     readFromscore();
     gamescore.sort((a, b) -> b.score - a.score);
-    return gamescore.get(0).getScore();
+    if(gamescore.size()<0) {
+      return 0;
+    } else {
+      return gamescore.get(0).getScore();
+    }  
     
   }  
 

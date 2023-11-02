@@ -1,20 +1,40 @@
 class Gamescore {
  int score;
  String date;
- String time;
-
-Gamescore(int score, String date, String time) {
+ int hour;
+ int minute;
+ int day;
+ int month;
+ int year;
+ 
+Gamescore(int score, int day, int month, int year, int hour, int minute) {
   this.score = score;
-  this.date = date;
-  this.time = time;
+  this.day = day;
+  this.month = month;
+  this.year = year;
+  this.hour = hour;
+  this.minute = minute;
 }
 
 String getDate() {
   return date;
 }
+int getDay() {
+  return day;
+}
+int getMonth() {
+  return month;
+}
+int getYear() {
+  return year;
+}
 
-String getTime() {
-  return time;
+int getHour() {
+  return hour;
+}
+
+int getMinute() {
+  return minute;
 }
 
 int getScore() {
