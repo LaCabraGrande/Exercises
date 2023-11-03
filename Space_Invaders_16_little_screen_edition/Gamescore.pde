@@ -1,6 +1,5 @@
 class Gamescore {
  int score;
- String date;
  int hour;
  int minute;
  int day;
@@ -14,10 +13,6 @@ Gamescore(int score, int day, int month, int year, int hour, int minute) {
   this.year = year;
   this.hour = hour;
   this.minute = minute;
-}
-
-String getDate() {
-  return date;
 }
 int getDay() {
   return day;
@@ -42,6 +37,3 @@ int getScore() {
 }
 
 }
-
-//date = day()+"."+month()+"."+year();
-//time = hour()+":"+minute()+":"+second();

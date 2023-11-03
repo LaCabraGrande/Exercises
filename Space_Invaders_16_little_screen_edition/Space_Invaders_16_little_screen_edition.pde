@@ -393,7 +393,7 @@ void draw() {
         try {
             FileWriter writer = new FileWriter("C:\\Users\\larsg\\Documents\\Processing\\Space_Invaders_16_little_screen_edition\\scorelist.txt");
             for(Gamescore g : gamescore) {
-                writer.write(g.getScore()+","+ g.getDate()+","+g.getHour()+","+g.getMinute()+"\n");
+                writer.write(g.getScore()+","+g.getDay()+","+g.getMonth()+","+g.getYear()+","+g.getHour()+","+g.getMinute()+"\n");
             }
             writer.close();
         } catch (IOException e) {
