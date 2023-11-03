@@ -52,7 +52,7 @@ boolean launch = false;
 boolean hit = false;
 boolean attack = false;
 boolean launchAlienMisile = false;
-boolean  hitbyAlien = false;
+boolean hitbyAlien = false;
 boolean explode = false;
 boolean hitAlienSpaceship = false;
 boolean alienmisileHitBunker = false;
@@ -392,6 +392,7 @@ void draw() {
   void writeToscore(ArrayList<Gamescore> gamescore) {
         try {
             FileWriter writer = new FileWriter("C:\\Users\\larsg\\Documents\\Processing\\Space_Invaders_16_little_screen_edition\\scorelist.txt");
+            //FileWriter writer = new FileWriter("../Data/scorelist.txt");
             for(Gamescore g : gamescore) {
                 writer.write(g.getScore()+","+g.getDay()+","+g.getMonth()+","+g.getYear()+","+g.getHour()+","+g.getMinute()+"\n");
             }
@@ -404,6 +405,7 @@ void draw() {
   void readFromscore() {
       gamescore = new ArrayList<Gamescore>();
       File file = new File("C:\\Users\\larsg\\Documents\\Processing\\Space_Invaders_16_little_screen_edition\\scorelist.txt");
+      //File file = new File("../Data/scorelist.txt");
       try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
@@ -475,6 +477,7 @@ void draw() {
   void createFile() {
     try {
       File file = new File("C:\\Users\\larsg\\Documents\\Processing\\Space_Invaders_16_little_screen_edition\\scorelist.txt");
+      //File file = new File("../Data/scorelist.txt");
       if (file.createNewFile()) {
         System.out.println("File created: ");
       } else {
